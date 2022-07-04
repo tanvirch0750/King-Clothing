@@ -1,8 +1,12 @@
+import { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { ReactComponent as KingLogo } from '../../assets/crown.svg';
+import { UserContext } from '../../context/User.context';
 import './Header.styles.scss';
 
 const Header = () => {
+  const { currentUser } = useContext(UserContext);
+  console.log(currentUser);
   return (
     <>
       <header className="navigation">
