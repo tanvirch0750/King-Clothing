@@ -6,12 +6,7 @@ import { signOutUser } from '../../utils/firebase/firebase.utils';
 import './Header.styles.scss';
 
 const Header = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-
-  const signOutHandler = async () => {
-    await signOutUser();
-    setCurrentUser(null);
-  };
+  const { currentUser } = useContext(UserContext);
 
   return (
     <>
@@ -25,7 +20,7 @@ const Header = () => {
             Shop
           </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutHandler}>
+            <span className="nav-link" onClick={signOutUser}>
               Signout
             </span>
           ) : (
