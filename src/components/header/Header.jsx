@@ -3,6 +3,8 @@ import { Link, Outlet } from 'react-router-dom';
 import { ReactComponent as KingLogo } from '../../assets/crown.svg';
 import { UserContext } from '../../context/User.context';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
+import CartDropdown from '../cart-dropdown/CartDropdown';
+import CartIcon from '../cart-icon/CartIcon';
 import './Header.styles.scss';
 
 const Header = () => {
@@ -28,7 +30,9 @@ const Header = () => {
               Signin
             </Link>
           )}
+          <CartIcon />
         </nav>
+        <CartDropdown />
       </header>
       <Outlet />
     </>
