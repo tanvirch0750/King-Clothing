@@ -3,10 +3,24 @@ import { CartContext } from '../../context/Cart.context';
 import './Checkout.styles.scss';
 
 const Checkout = () => {
-  const { cartItems, addItemToCart } = useContext(CartContext);
+  const { cartItems, addItemToCart, removeItemFromCart } =
+    useContext(CartContext);
 
   return (
-    <div>
+    <div className="checkout-container">
+      <div className="checkout-header">
+        <div className="header-block">
+          <span>Product</span>
+        </div>
+        <div className="header-block">
+          <span>Description</span>
+        </div>
+        <div className="header-block">
+          <span>Quantitu</span>
+        </div>
+        <div className="header-block"></div>
+        <div className="header-block"></div>
+      </div>
       {cartItems.map((cartItem) => {
         return (
           <div key={cartItem.id}>
@@ -15,7 +29,7 @@ const Checkout = () => {
             <br />
             <span onClick={() => addItemToCart(cartItem)}>Increment</span>
             <br />
-            <span>Decrement</span>
+            <span onClick={() => removeItemFromCart(cartItem)}>Decrement</span>
           </div>
         );
       })}
