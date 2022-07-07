@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../button/Button';
 import ProductCard from '../product-card/ProductCard';
 import './CategoryPreview.styles.scss';
 
 const CategoryPreview = ({ title, products }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="category-preview-container">
       <div className="preview-inner">
@@ -18,7 +21,7 @@ const CategoryPreview = ({ title, products }) => {
         </div>
       </div>
       <div className="preview-btn">
-        <Button>Show all {title}</Button>
+        <Button onClick={() => navigate(`${title}`)}>Show all {title}</Button>
       </div>
     </div>
   );

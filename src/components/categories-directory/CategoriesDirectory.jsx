@@ -1,5 +1,5 @@
-import CategoryItem from '../category-item/CategoryItem';
-import './Categories.styles.scss';
+import CategoryDirectoryItem from '../category-directory-item/CategoryDirectoryItem';
+import './CategoriesDirectory.styles.scss';
 
 const categories = [
   {
@@ -29,14 +29,14 @@ const categories = [
   },
 ];
 
-const Categories = () => {
+const CategoriesDirectory = () => {
   return (
     <div className="categories-container">
       {categories.map((category) => {
-        return <CategoryItem key={category.id} category={category} />;
+        return <CategoryDirectoryItem key={category.id} category={category} />;
       })}
     </div>
   );
 };
 
-export default Categories;
+export default CategoriesDirectory;
