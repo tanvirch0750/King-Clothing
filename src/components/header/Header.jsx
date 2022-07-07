@@ -1,12 +1,18 @@
 import { useContext } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ReactComponent as KingLogo } from '../../assets/crown.svg';
 import { CartContext } from '../../context/Cart.context';
 import { UserContext } from '../../context/User.context';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 import CartDropdown from '../cart-dropdown/CartDropdown';
 import CartIcon from '../cart-icon/CartIcon';
-import './Header.styles.scss';
+import './Header.styles.jsx';
+import {
+  LogoContainer,
+  NavigationContainer,
+  NavLink,
+  NavLinksContainer,
+} from './Header.styles.jsx';
 
 const Header = () => {
   const { currentUser } = useContext(UserContext);
@@ -14,28 +20,24 @@ const Header = () => {
 
   return (
     <>
-      <header className="navigation">
-        <Link className="logo-container" to="/">
-          <KingLogo className="logo" />
-        </Link>
+      <NavigationContainer>
+        <LogoContainer to="/">
+          <KingLogo />
+        </LogoContainer>
 
-        <nav className="nav-links-container">
-          <Link className="nav-link" to="shop">
-            Shop
-          </Link>
+        <NavLinksContainer>
+          <NavLink to="shop">Shop</NavLink>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>
+            <NavLink as="span" onClick={signOutUser}>
               Signout
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="auth">
-              Signin
-            </Link>
+            <NavLink to="auth">Signin</NavLink>
           )}
           <CartIcon />
-        </nav>
+        </NavLinksContainer>
         {isCartOpen && <CartDropdown />}
-      </header>
+      </NavigationContainer>
       <Outlet />
     </>
   );
