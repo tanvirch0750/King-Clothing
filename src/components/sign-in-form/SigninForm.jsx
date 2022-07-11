@@ -35,8 +35,6 @@ const SigninForm = () => {
         password
       );
 
-      console.log(user);
-
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/wrong-password') {
