@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { ReactComponent as KingLogo } from '../../assets/crown.svg';
-import { CartContext } from '../../context/Cart.context';
+import { selectIsCartOpen } from '../../store/cart/cart.selector';
 import { selectCurrentUser } from '../../store/user/user.selector';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 import CartDropdown from '../cart-dropdown/CartDropdown';
@@ -16,9 +15,8 @@ import {
 } from './Header.styles.jsx';
 
 const Header = () => {
-  const { isCartOpen } = useContext(CartContext);
-
   const currentUser = useSelector(selectCurrentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   return (
     <>
