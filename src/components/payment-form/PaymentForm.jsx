@@ -1,11 +1,21 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React from 'react';
-import Button, { BUTTON_TYPE_CLASSES } from '../button/Button';
-import { FormConatiner, PaymentFormContainer } from './PaymentForm.styles';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectCartTotal } from '../../store/cart/cart.selector';
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { BUTTON_TYPE_CLASSES } from '../button/Button';
+import {
+  FormConatiner,
+  PaymentButton,
+  PaymentFormContainer,
+} from './PaymentForm.styles';
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const amount = useSelector(selectCartTotal);
+  const currentUser = useSelector(selectCurrentUser);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const paymentHandler = async (e) => {
     e.preventDefault();
@@ -13,12 +23,14 @@ const PaymentForm = () => {
       return;
     }
 
+    setIsProcessing(true);
+
     const response = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ amount: 10000 }),
+      body: JSON.stringify({ amount: amount * 100 }),
     }).then((res) => res.json());
 
     const {
@@ -29,10 +41,12 @@ const PaymentForm = () => {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: 'Tanvir Chowdhury',
+          name: currentUser ? currentUser.displayName : 'Guest',
         },
       },
     });
+
+    setIsProcessing(false);
 
     if (paymentResult.error) {
       alert(paymentResult.error);
@@ -48,13 +62,13 @@ const PaymentForm = () => {
       <FormConatiner onSubmit={paymentHandler}>
         <h2>Credit Card Payment</h2>
         <CardElement></CardElement>
-        <Button
+        <PaymentButton
           type="submit"
           buttonType={BUTTON_TYPE_CLASSES.inverted}
-          style={{ marginTop: '32px' }}
+          isLoading={isProcessing}
         >
           Pay now
-        </Button>
+        </PaymentButton>
       </FormConatiner>
     </PaymentFormContainer>
   );
